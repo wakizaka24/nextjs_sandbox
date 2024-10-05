@@ -25,7 +25,7 @@ export const GameBoard: React.FC<GameBoardProps> = ({gameState, onGameBoardClick
     var cols = convertMarkGameCols(boardWidth, boardData);
 
     return <div>
-        <p className='desc'>GameBoard.tsx</p>
+        <p className='desc'>MarkGameBoard.tsx</p>
         <table>
         {
         // 各行を出力する

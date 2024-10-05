@@ -246,8 +246,8 @@ export default MaskGameV1;
 --- 新規追加する ---
 import Head from 'next/head';
 import { useEffect, useState } from 'react';
-import { GameBoard } from "@/components/ormanisms/GameBoard";
-import { GameStatus } from '@/components/ormanisms/GameStatus';
+import { GameBoard } from "@/components/ormanisms/MarkGameBoard";
+import { GameStatus } from '@/components/ormanisms/MarkGameStatus';
 import { GameState, Player, markGameTitle, isCellEmpty, getWinner } from './features';
 import style from './style.module.css';
 
@@ -452,19 +452,19 @@ export function getWinner(gameState: GameState, index: number) {
 フォルダを作成する
 ```
 
-10. nextjs_sandbox/src/components/ormanisms/GameBoard
+10. nextjs_sandbox/src/components/ormanisms/MarkGameBoard
 ```
 フォルダを作成する
 ```
 
-11. nextjs_sandbox/src/components/ormanisms/GameBoard/index.ts
+11. nextjs_sandbox/src/components/ormanisms/MarkGameBoard/index.ts
 ```
 --- 新規追加する ---
-export * from './GameBoard';
+export * from './MarkGameBoard';
 --- 新規追加する ---
 ```
 
-12. nextjs_sandbox/src/components/ormanisms/GameBoard/GameBoard.tsx
+12. nextjs_sandbox/src/components/ormanisms/MarkGameBoard/MarkGameBoard.tsx
 ```
 --- 新規追加する ---
 import { GameState, convertMarkGameCols } from '@/components/templates/MarkGame/features';
@@ -483,18 +483,18 @@ const Square: React.FC<SquareProps> = ({children, onSquareClick}) => {
     )
 }
 
-export type GameBoardProps = {
+export type MarkGameBoardProps = {
     gameState: GameState,
     onGameBoardClick: (index: number) => void;
 }
 
-export const GameBoard: React.FC<GameBoardProps> = ({gameState, onGameBoardClick}) => {
+export const GameBoard: React.FC<MarkGameBoardProps> = ({gameState, onGameBoardClick}) => {
     const boardWidth = gameState.boardWidth;
     var boardData = gameState.boardData;
     var cols = convertMarkGameCols(boardWidth, boardData);
 
     return <div>
-        <p className='desc'>GameBoard.tsx</p>
+        <p className='desc'>MarkGameBoard.tsx</p>
         <table>
         {
         // 各行を出力する
@@ -516,7 +516,7 @@ export const GameBoard: React.FC<GameBoardProps> = ({gameState, onGameBoardClick
 --- 新規追加する ---
 ```
 
-13. nextjs_sandbox/src/components/ormanisms/GameBoard/style.module.css
+13. nextjs_sandbox/src/components/ormanisms/MarkGameBoard/style.module.css
 ```
 --- 新規追加する ---
 .square {
@@ -528,35 +528,35 @@ export const GameBoard: React.FC<GameBoardProps> = ({gameState, onGameBoardClick
 --- 新規追加する ---
 ```
 
-14. nextjs_sandbox/src/components/ormanisms/GameStatus
+14. nextjs_sandbox/src/components/ormanisms/MarkGameStatus
 ```
 フォルダを作成する
 ```
 
-15. nextjs_sandbox/src/components/ormanisms/GameStatus/index.ts
+15. nextjs_sandbox/src/components/ormanisms/MarkGameStatus/index.ts
 ```
 --- 新規追加する ---
-export * from './GameStatus';
+export * from './MarkGameStatus';
 --- 新規追加する ---
 ```
 
-16. nextjs_sandbox/src/components/ormanisms/GameStatus/GameStatus.tsx
+16. nextjs_sandbox/src/components/ormanisms/MarkGameStatus/MarkGameStatus.tsx
 ```
 --- 新規追加する ---
 import { GameState, Player } from '@/components/templates/MarkGame/features';
 
-export type GameStatusProps = {
-    gameState: GameState,
+export type MarkGameStatusProps = {
+    gameState: MarkGameState,
     onGameResetClick: () => void;
 }
 
-export const GameStatus: React.FC<GameStatusProps> = ({gameState, onGameResetClick}) => {
+export const GameStatus: React.FC<MarkGameStatusProps> = ({gameState, onGameResetClick}) => {
     var currentPlayer = gameState.currentPlayer;
     var winner = gameState.winner;
     var draw = gameState.draw;
 
     return <div>
-        <p className='desc'>GameStatus.tsx</p>
+        <p className='desc'>MarkGameStatus.tsx</p>
         <div className='small'>
             {// [!] タグの中で条件と&&でHTML出力がどうなるのか。
              // 
@@ -599,8 +599,8 @@ export default MaskGameV2;
 --- 新規追加する ---
 import Head from 'next/head';
 import { useEffect } from 'react';
-import { GameBoard } from "@/components/ormanisms/GameBoard";
-import { GameStatus } from '@/components/ormanisms/GameStatus';
+import { GameBoard } from "@/components/ormanisms/MarkGameBoard";
+import { GameStatus } from '@/components/ormanisms/MarkGameStatus';
 import { useMarkGame } from '@/providers/MarkGameProvider';
 import { markGameTitle } from './features';
 import style from './style.module.css';

@@ -11,7 +11,7 @@ export const GameStatus: React.FC<GameStatusProps> = ({gameState, onGameResetCli
     var draw = gameState.draw;
 
     return <div>
-        <p className='desc'>GameStatus.tsx</p>
+        <p className='desc'>MarkGameStatus.tsx</p>
         <div className='small'>
             {// [!] タグの中で条件と&&でHTML出力がどうなるのか。
              // Trueの時にタグを表示する。
