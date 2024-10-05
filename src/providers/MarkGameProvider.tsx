@@ -1,13 +1,14 @@
 import { getWinner, isCellEmpty } from "@/components/templates/MarkGame/features";
 import React, { useReducer } from "react";
 import { createContext, ReactNode } from "react";
+import { useFirebase } from "./FirebaseProvider";
 
 export enum Player {
     Maru = '⭕️',
     Batsu = '❌'
 }
 
-interface MarkGameState {
+export interface MarkGameState {
     boardWidth: number;
     boardData: string[];
     currentPlayer: Player;
@@ -16,8 +17,11 @@ interface MarkGameState {
 }
 interface MarkGameContext {
     gameState: MarkGameState,
+    // Firestoreの初期化とFirestoreにデータがない場合データを初期化する。
     initMarkGameState: () => void,
     onGameBoardClick: (index: number) => void
+    // Firestoreのデータを初期化する。
+    resetMarkGameState: () => void,
 }
 const MarkGameContext = createContext({} as MarkGameContext);
 export const useMarkGame = () => React.useContext(MarkGameContext);
@@ -35,9 +39,13 @@ type Action =
     }
 };
 
+export var setMarkGameState: (gameState: MarkGameState) => void;
+
 export const MarkGameProvider: React.FC<{children: ReactNode}> = ({
     children
 }) => {
+    const { initFirestoreGameState, applyFirestoreGameState } = useFirebase();
+
     var firstGameState: MarkGameState = {
         boardWidth: 3,
         boardData: ['', '', '', '', '', '', '', '', ''],
@@ -45,12 +53,18 @@ export const MarkGameProvider: React.FC<{children: ReactNode}> = ({
         winner: null,
         draw: false
     };
-    const initMarkGameState = (() => {
+    const initMarkGameState = async () => {
+        // dispatch({type: ActionType.updateGameState, payload: {
+        //     gameState: firstGameState
+        // }});
+        initFirestoreGameState(firstGameState);
+    };
+    setMarkGameState = ((gameState: MarkGameState) => {
         dispatch({type: ActionType.updateGameState, payload: {
-            gameState: firstGameState
+            gameState: gameState
         }});
     });
-    const onGameBoardClick = (index: number) => {
+    const onGameBoardClick = async (index: number) => {
         console.debug('click index=' + index);
         if (isCellEmpty(gameState, index) && gameState.winner == null) {
             var boardData = gameState.boardData;
@@ -64,12 +78,16 @@ export const MarkGameProvider: React.FC<{children: ReactNode}> = ({
             }
             var winner = getWinner(gameState, index);
             var draw = boardData.filter((cell)=>cell == '').length == 0;
-            dispatch({type: ActionType.updateGameState, payload: {
-                gameState: {boardWidth, boardData, currentPlayer, winner, draw}
-            }});                    
+            // dispatch({type: ActionType.updateGameState, payload: {
+            //     gameState: {boardWidth, boardData, currentPlayer, winner, draw}
+            // }});
+            applyFirestoreGameState({boardWidth, boardData, currentPlayer, winner, draw});               
         } else {
             console.debug('invelid index!');
         }
+    }
+    const resetMarkGameState = async () => {
+        applyFirestoreGameState(firstGameState);
     }
     const reducer = (_: MarkGameState, action: Action): MarkGameState => {
         switch (action.type) {
@@ -79,7 +97,7 @@ export const MarkGameProvider: React.FC<{children: ReactNode}> = ({
     }
     const [gameState, dispatch] = useReducer(reducer, firstGameState);
     return <MarkGameContext.Provider value={{
-        gameState, initMarkGameState, onGameBoardClick
+        gameState, initMarkGameState, onGameBoardClick, resetMarkGameState
     }}>
     {children}
     </MarkGameContext.Provider>;
