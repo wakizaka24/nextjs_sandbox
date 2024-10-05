@@ -79,7 +79,7 @@ https://github.com/coreybutler/nvm-windows/releases
 % cd ~/pc_data/project/nextjs_sandbox 
 % vi package.json
   "scripts": {
-    "debug": "NODE_OPTIONS='--inspect' next dev",
+    "debug": "set NODE_OPTIONS='--inspect' && next dev",
 
 % cd ~/pc_data/project/nextjs_sandbox 
 % mkdir .vscode
@@ -93,6 +93,10 @@ https://github.com/coreybutler/nvm-windows/releases
           "name": "Next.js Client",
           "url": "http://localhost:3000/",
           "webRoot": "${workspaceFolder}",
+          "resolveSourceMapLocations": [
+            "${workspaceFolder}/**",
+            "!**/node_modules/**"
+          ]
       }
   ],
 }

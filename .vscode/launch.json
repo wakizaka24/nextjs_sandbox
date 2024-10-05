@@ -8,9 +8,10 @@
             "url": "http://localhost:3000/",
             "webRoot": "${workspaceFolder}",
             "resolveSourceMapLocations": [
-                "!**/node_modules/**"
+              "${workspaceFolder}/**",
+              "!**/node_modules/**"
             ]
         }
     ],
-  }
+}
   
