@@ -1,12 +1,7 @@
-import { getWinner, isCellEmpty } from "@/components/templates/MarkGame/features";
+import { getWinner, isCellEmpty, Player } from "@/components/templates/MarkGame/features";
 import React, { useReducer } from "react";
 import { createContext, ReactNode } from "react";
 import { useFirebase } from "./FirebaseProvider";
-
-export enum Player {
-    Maru = '⭕️',
-    Batsu = '❌'
-}
 
 export interface MarkGameState {
     boardWidth: number;
