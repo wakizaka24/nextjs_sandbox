@@ -1,7 +1,7 @@
 ### デプロイ先
 https://nextjs-sandbox-git-feature-killingtime-wakizaka24s-projects.vercel.app/?_vercel_share=dUPOIpHJl9vHNFl75lQ0QoRIwj8TD3R5
 
-### Nodeのバージョン合わせ(Mac)
+### Nodeのバージョン合わせツールの設定(Mac)
 ```
 % brew upgrade nodebrew
 % brew install nodebrew
@@ -16,7 +16,7 @@ export PATH=$HOME/.nodebrew/current/bin:$PATH
 % source ~/.zshrc
 ```
 
-### 対象バージョンのインストール(Mac)
+### Nodeのバージョン合わせ(Mac)
 ```
 インストール可能なNode.js一覧
 % nodebrew ls-remote
