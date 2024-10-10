@@ -9,7 +9,7 @@ import style from './style.module.css';
 var initEffect = false;
 
 export const MarkGame: React.FC = () => {
-    const { gameState, initMarkGameState, onGameBoardClick } = useMarkGame();
+    const { gameState, initMarkGameState, onGameBoardClick, resetMarkGameState } = useMarkGame();
 
     useEffect(() => {
         if (initEffect) {
@@ -31,7 +31,7 @@ export const MarkGame: React.FC = () => {
                 (index) => onGameBoardClick(index)
             } />
             <GameStatus gameState={gameState} onGameResetClick={() => {
-                initMarkGameState(); 
+                resetMarkGameState(); 
             }} />
         </div>
     </>;
